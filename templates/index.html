@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real-Time Language Translator</title>
+    <!-- Link to external CSS for styling -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to right, #ff7e5f, #feb47b);
+            margin: 0;
+            padding: 0;
+            color: #333;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: #fff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #444;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 8px;
+            margin-top: 20px;
+        }
+
+        select, textarea, button {
+            width: 100%;
+            margin: 8px 0;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            background-color: #ff7e5f;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #feb47b;
+        }
+
+        .output-container {
+            margin-top: 30px;
+            background: #f9f9f9;
+            padding: 20px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .output-container h2 {
+            color: #555;
+        }
+
+        .output-container .translated-text {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #eee;
+            padding: 10px;
+            border-radius: 5px;
+            margin-top: 10px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .copy-button {
+            background-color: #ff7e5f;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            padding: 5px 10px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+            margin-left: 10px;
+            width: 100px;
+        }
+
+        .copy-button:hover {
+            background-color: #feb47b;
+        }
+
+        .copy-icon {
+            margin-right: 5px;
+        }
+
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            color: #888;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Real-Time Language Translator</h1>
+
+        <form action="/translate" method="post">
+            <label for="sourceLang">Select Source Language:</label>
+            <select id="sourceLang" name="sourceLang">
+                <option value="en" {% if source_lang == 'en' %}selected{% endif %}>English</option>
+                <option value="es" {% if source_lang == 'es' %}selected{% endif %}>Spanish</option>
+                <option value="fr" {% if source_lang == 'fr' %}selected{% endif %}>French</option>
+                <option value="de" {% if source_lang == 'de' %}selected{% endif %}>German</option>
+                <option value="hi" {% if source_lang == 'hi' %}selected{% endif %}>Hindi</option>
+                <option value="ar" {% if source_lang == 'ar' %}selected{% endif %}>Arabic</option>
+            </select>
+
+            <label for="targetLang">Select Target Language:</label>
+            <select id="targetLang" name="targetLang">
+                <option value="en" {% if target_lang == 'en' %}selected{% endif %}>English</option>
+                <option value="es" {% if target_lang == 'es' %}selected{% endif %}>Spanish</option>
+                <option value="fr" {% if target_lang == 'fr' %}selected{% endif %}>French</option>
+                <option value="de" {% if target_lang == 'de' %}selected{% endif %}>German</option>
+                <option value="hi" {% if target_lang == 'hi' %}selected{% endif %}>Hindi</option>
+                <option value="ar" {% if target_lang == 'ar' %}selected{% endif %}>Arabic</option>
+            </select>
+
+            <label for="text">Enter Text:</label>
+            <textarea id="text" name="text" rows="4" placeholder="Type the text you want to translate...">{{ text }}</textarea>
+
+            <button type="submit">Translate 🔄</button>
+        </form>
+
+        {% if translated_text %}
+        <div class="output-container">
+            <h2>✨ Translated Text:</h2>
+            <div class="translated-text">
+                <span id="translatedText">{{ translated_text }}</span>
+                <button class="copy-button" onclick="copyToClipboard()">
+                    <span class="copy-icon">📋</span> Copy
+                </button>
+            </div>
+        </div>
+        {% endif %}
+    </div>
+
+    <footer>
+        <p>Powered by Divyansh | Created with ❤️</p>
+    </footer>
+
+    <script>
+        // Function to copy translated text to clipboard
+        function copyToClipboard() {
+            const textToCopy = document.getElementById('translatedText').innerText;
+            navigator.clipboard.writeText(textToCopy).then(() => {
+                alert('Translated text copied to clipboard!');
+            }).catch(err => {
+                alert('Failed to copy text: ' + err);
+            });
+        }
+    </script>
+</body>
+</html>

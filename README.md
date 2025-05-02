@@ -1,5 +1,8 @@
 # Real-Time Language Translator
 
+![image](https://github.com/user-attachments/assets/9c92b121-86f9-450e-b8d2-36fd47f1d66d)
+
+
 A web-based application that allows users to translate text between multiple languages in real-time. This project is built using Flask for the backend and HTML, CSS, and JavaScript for the frontend.
 
 ---
